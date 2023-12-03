@@ -11,6 +11,7 @@ def sum_valid_games(input_file, max_cubes):
     # The dictionary format will be: ID: Max R, Max B, max G
     games = {}
     sum_ids = 0
+    sum_powers = 0
     for line in lines:
         # A sample line to work with 
         # Game 8: 8 green, 4 blue; 17 green, 4 red; 10 blue, 5 green, 9 red; 9 green, 8 red, 3 blue; 9 green, 5 red, 2 blue
@@ -27,9 +28,14 @@ def sum_valid_games(input_file, max_cubes):
         if red_max <= max_colors["red"] and blue_max <= max_colors["blue"] and green_max <= max_colors["green"]:
             # This is a valid game! 
             sum_ids+=game_id
+        
+        # Next, multiply each max value and add it to the summed powers
+        sum_powers += (red_max * blue_max * green_max)
 
-    return sum_ids
+    return sum_ids, sum_powers
+
 
 max_colors = {"red": 12, "green": 13, "blue": 14}
-result = sum_valid_games("input.txt", max_colors)
-print(f'The sum of valid games is {result}')
+(sum_ids, sum_powers) = sum_valid_games("input.txt", max_colors)
+print(f'The sum of valid games is {sum_ids}')
+print(f'The sum of the power of the cubes is {sum_powers}')
